@@ -82,11 +82,22 @@ const CustomerApp = () => {
       </section>
 
       {/* Services Catalog */}
-      <section id="services" className="py-32 px-6 bg-gray-50 dark:bg-gray-900/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-24">
-            <p className="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">Our Services</p>
-            <h2 className="text-5xl font-black tracking-tighter">THE ELITE CATALOG</h2>
+      <section id="services" className="py-32 px-6 bg-white dark:bg-gray-950 relative overflow-hidden">
+        {/* Aesthetic Background Detail */}
+        <div className="absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 opacity-5 pointer-events-none">
+          <img src="/service-bg.png" alt="detail" className="w-full h-full object-cover scale-150 grayscale" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12">
+            <div className="max-w-xl">
+              <p className="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">The Selection</p>
+              <h2 className="text-6xl font-black tracking-tighter leading-none mb-6">CURATED <br />TREATMENTS.</h2>
+              <p className="text-lg text-text-muted font-medium">Every service is a masterpiece of technique and care, using only the finest products in the industry.</p>
+            </div>
+            <div className="hidden lg:block w-32 h-32 rounded-full border border-primary/20 flex items-center justify-center animate-spin-slow">
+              <Sparkles className="text-primary" size={40} />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

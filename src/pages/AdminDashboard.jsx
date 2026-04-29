@@ -20,20 +20,22 @@ const AdminDashboard = () => {
   const [passwordMsg, setPasswordMsg] = useState({ text: '', type: '' });
 
   const getFilteredByRange = (data) => {
-    const today = new Date();
+    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
     return data.filter(b => {
+      if (dataRange === 'Daily') return b.date === today;
+      
       const bDate = new Date(b.date);
-      if (dataRange === 'Daily') return b.date === today.toISOString().split('T')[0];
+      const now = new Date();
       if (dataRange === 'Weekly') {
         const lastWeek = new Date();
-        lastWeek.setDate(today.getDate() - 7);
+        lastWeek.setDate(now.getDate() - 7);
         return bDate >= lastWeek;
       }
       if (dataRange === 'Monthly') {
-        return bDate.getMonth() === today.getMonth() && bDate.getFullYear() === today.getFullYear();
+        return bDate.getMonth() === now.getMonth() && bDate.getFullYear() === now.getFullYear();
       }
       if (dataRange === 'Annual') {
-        return bDate.getFullYear() === today.getFullYear();
+        return bDate.getFullYear() === now.getFullYear();
       }
       return true;
     });
@@ -41,22 +43,21 @@ const AdminDashboard = () => {
 
   const rangeBookings = getFilteredByRange(bookings);
 
-  const totalRevenue = rangeBookings
-    .filter(b => b.status === 'Completed')
-    .reduce((acc, curr) => acc + curr.price, 0);
-  
+  // Syncing stats with rangeBookings
+  const completedBookings = rangeBookings.filter(b => b.status === 'Completed');
+  const totalRevenue = completedBookings.reduce((acc, curr) => acc + curr.price, 0);
   const pendingCount = rangeBookings.filter(b => b.status === 'Pending').length;
-  const todayCount = rangeBookings.length;
-  const completedCount = rangeBookings.filter(b => b.status === 'Completed').length;
+  const totalCount = rangeBookings.length;
+  const completedCount = completedBookings.length;
 
   const stats = [
     { label: `${dataRange} Revenue`, value: `₹${totalRevenue.toLocaleString('en-IN')}`, icon: <IndianRupee />, color: "from-green-500 to-emerald-600", trend: "+12.5%" },
-    { label: "Total Bookings", value: todayCount, icon: <Calendar />, color: "from-blue-500 to-indigo-600", trend: "+4" },
+    { label: "Total Bookings", value: totalCount, icon: <Calendar />, color: "from-blue-500 to-indigo-600", trend: "+4" },
     { label: "Pending", value: pendingCount, icon: <Clock />, color: "from-amber-500 to-orange-600", trend: "Needs Action" },
     { label: "Completed", value: completedCount, icon: <CheckCircle />, color: "from-purple-500 to-fuchsia-600", trend: "Success" },
   ];
 
-  const filteredBookings = bookings.filter(b => {
+  const filteredBookings = rangeBookings.filter(b => {
     const matchesSearch = b.name.toLowerCase().includes(search.toLowerCase()) || b.phone.includes(search);
     const matchesStatus = statusFilter === 'All' || b.status === statusFilter;
     return matchesSearch && matchesStatus;

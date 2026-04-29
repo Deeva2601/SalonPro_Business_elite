@@ -56,7 +56,7 @@ export const AppProvider = ({ children }) => {
       ...paymentData,
       id: Date.now(),
       status: 'Completed',
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toLocaleDateString('en-CA'),
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       price: getServicePrice(paymentData.service),
       type: 'Offline'
@@ -69,8 +69,7 @@ export const AppProvider = ({ children }) => {
       if (b.id === id) {
         const updated = { ...b, status };
         if (status === 'Completed') {
-          // Update date to today so it counts in today's revenue
-          updated.date = new Date().toISOString().split('T')[0];
+          updated.date = new Date().toLocaleDateString('en-CA');
         }
         return updated;
       }
