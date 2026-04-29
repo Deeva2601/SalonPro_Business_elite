@@ -1,197 +1,223 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Calendar, Clock, MapPin, Phone, MessageCircle, Star, Scissors, Sparkles, Heart, Zap } from 'lucide-react';
+import { 
+  Scissors, Sparkles, Heart, Clock, Star, 
+  MapPin, Phone, Instagram, Facebook, 
+  ArrowRight, Check, Calendar, User, PhoneCall,
+  ChevronRight
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const CustomerApp = () => {
-  const { addBooking } = useApp();
-  const [filter, setFilter] = useState('All');
-  const [form, setForm] = useState({ name: '', phone: '', service: '', date: '', time: '', note: '' });
-  const [isBooked, setIsBooked] = useState(false);
-
-  const services = [
-    { name: 'Hair Cut', price: 299, category: 'Hair', icon: <Scissors size={20} /> },
-    { name: 'Hair Spa', price: 799, category: 'Hair', icon: <Sparkles size={20} /> },
-    { name: 'Bridal Makeup', price: 7999, category: 'Bridal', icon: <Heart size={20} /> },
-    { name: 'Party Makeup', price: 1999, category: 'Makeup', icon: <Zap size={20} /> },
-    { name: 'Facial', price: 999, category: 'Skincare', icon: <Star size={20} /> },
-    { name: 'Manicure/Pedicure', price: 699, category: 'Skincare', icon: <Sparkles size={20} /> },
-  ];
-
-  const filteredServices = filter === 'All' ? services : services.filter(s => s.category === filter);
+  const { services, bookings, addBooking } = useApp();
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    service: '',
+    date: '',
+    time: ''
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addBooking(form);
-    setIsBooked(true);
-    setTimeout(() => setIsBooked(false), 3000);
-    setForm({ name: '', phone: '', service: '', date: '', time: '', note: '' });
+    const serviceDetails = services.find(s => s.name === formData.service);
+    addBooking({
+      ...formData,
+      price: serviceDetails?.price || 0,
+      status: 'Pending'
+    });
+    setFormData({ name: '', phone: '', service: '', date: '', time: '' });
+    alert('Appointment requested! We will confirm shortly.');
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
-      <div className="hero-gradient" />
-      
-      {/* Hero Section */}
-      <section className="text-center mb-24 fade-in">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider mb-6 inline-block">
-            Experience Excellence
-          </span>
-          <h1 className="text-6xl font-bold mb-6 leading-tight">
-            Reveal Your <span className="text-gradient">Natural Beauty</span>
-          </h1>
-          <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10">
-            Premium salon services tailored to your unique style. Book your transformation today with our expert stylists.
-          </p>
-          <div className="flex justify-center gap-4">
-            <button onClick={() => document.getElementById('booking').scrollIntoView({ behavior: 'smooth' })} className="btn btn-primary text-lg px-8 py-4">Book Appointment</button>
-            <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer" className="btn bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-4">
-              <MessageCircle size={24} /> WhatsApp Us
-            </a>
+    <div className="bg-white dark:bg-gray-950">
+      {/* Hero Section - Magazine Style */}
+      <section className="relative h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/hero-bg.png" 
+            alt="Luxury Salon" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
+          <div className="max-w-2xl text-white">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-[1px] bg-white" />
+                <span className="text-xs font-black uppercase tracking-[0.5em]">The Ultimate Experience</span>
+              </div>
+              <h1 className="text-7xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
+                REDEFINE <br />
+                <span className="text-primary italic font-serif">Luxury.</span>
+              </h1>
+              <p className="text-xl text-white/80 font-medium mb-12 max-w-lg leading-relaxed">
+                Step into a world of curated beauty. Our elite stylists and premium treatments are designed to elevate your personal style to its highest potential.
+              </p>
+              <div className="flex gap-6">
+                <a href="#booking" className="btn bg-white text-gray-900 px-10 py-5 text-xs font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
+                  Book Appointment
+                </a>
+                <a href="#services" className="btn bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-5 text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all">
+                  View Catalog
+                </a>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
+
+        <div className="absolute bottom-10 right-10 hidden lg:block">
+          <div className="flex flex-col gap-6 text-white/60">
+            <Instagram size={20} className="hover:text-white cursor-pointer transition-colors" />
+            <Facebook size={20} className="hover:text-white cursor-pointer transition-colors" />
+          </div>
+        </div>
       </section>
 
-      {/* Services Section */}
-      <section className="mb-24">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
-            <h2 className="text-3xl font-bold mb-2">Our Premium Services</h2>
-            <p className="text-text-muted">Choose from our wide range of professional beauty treatments.</p>
+      {/* Services Catalog */}
+      <section id="services" className="py-32 px-6 bg-gray-50 dark:bg-gray-900/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <p className="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">Our Services</p>
+            <h2 className="text-5xl font-black tracking-tighter">THE ELITE CATALOG</h2>
           </div>
-          <div className="flex gap-2 bg-gray-100 dark:bg-gray-800 p-1.5 rounded-2xl overflow-x-auto">
-            {['All', 'Hair', 'Makeup', 'Skincare', 'Bridal'].map(cat => (
-              <button 
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${filter === cat ? 'bg-white dark:bg-gray-700 shadow-md text-primary' : 'text-text-muted hover:text-text'}`}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {services.map((service, i) => (
+              <motion.div 
+                key={service.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group cursor-pointer"
               >
-                {cat}
-              </button>
+                <div className="card p-0 overflow-hidden bg-white dark:bg-gray-900 border-none shadow-xl group-hover:shadow-2xl transition-all duration-500 rounded-[2rem]">
+                  <div className="relative h-64">
+                    <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 animate-pulse" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
+                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                      <div>
+                        <h3 className="text-2xl font-black text-white tracking-tight">{service.name}</h3>
+                        <p className="text-white/60 text-sm font-bold uppercase tracking-widest">{service.duration}</p>
+                      </div>
+                      <span className="text-xl font-black text-primary">₹{service.price}</span>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <p className="text-text-muted font-medium mb-8 line-clamp-2">Experience the peak of professional {service.name.toLowerCase()} tailored specifically to your needs.</p>
+                    <button 
+                      onClick={() => {
+                        setFormData({...formData, service: service.name});
+                        window.location.hash = 'booking';
+                      }}
+                      className="w-full flex items-center justify-between group/btn text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white"
+                    >
+                      Reservations <ArrowRight className="group-hover/btn:translate-x-2 transition-transform duration-300 text-primary" size={20} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredServices.map((s, i) => (
-            <motion.div 
-              key={s.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
-              className="card group hover:border-primary/30"
-            >
-              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-                {s.icon}
-              </div>
-              <h3 className="text-xl font-bold mb-2">{s.name}</h3>
-              <p className="text-3xl font-bold text-gradient mb-6">₹{s.price.toLocaleString('en-IN')}</p>
-              <button 
-                onClick={() => {
-                  setForm({...form, service: s.name});
-                  document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full btn border border-primary/20 hover:bg-primary hover:text-white"
-              >
-                Book This
-              </button>
-            </motion.div>
-          ))}
-        </div>
       </section>
 
-      {/* Booking Form */}
-      <section id="booking" className="mb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">Reserve Your <span className="text-primary">Spot</span></h2>
-            <p className="text-lg text-text-muted mb-12">
-              Fill out the form to book your appointment. We'll confirm your slot within 15 minutes.
-            </p>
-            
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent"><MapPin /></div>
-                <div>
-                  <p className="font-bold">Visit Us</p>
-                  <p className="text-text-muted">123 Beauty Lane, Mumbai, India</p>
-                </div>
+      {/* Booking Experience */}
+      <section id="booking" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <p className="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">Reservations</p>
+              <h2 className="text-6xl font-black tracking-tighter mb-8 leading-none">SECURE YOUR <br />SESSION.</h2>
+              <p className="text-lg text-text-muted font-medium mb-12 max-w-md">Our private studio sessions are highly sought after. Book in advance to guarantee your preferred time slot with our master stylists.</p>
+              
+              <div className="space-y-8">
+                {[
+                  { icon: <MapPin />, title: "Elite Location", text: "Luxury Plaza, South Delhi" },
+                  { icon: <PhoneCall />, title: "Concierge", text: "+91 98765 43210" },
+                  { icon: <Clock />, title: "Hours", text: "10:00 AM - 08:00 PM" },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6 items-center">
+                    <div className="w-12 h-12 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-primary shadow-inner">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-sm uppercase tracking-widest">{item.title}</h4>
+                      <p className="text-text-muted font-medium">{item.text}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary"><Clock /></div>
-                <div>
-                  <p className="font-bold">Opening Hours</p>
-                  <p className="text-text-muted">Mon-Sun: 9:00 AM - 9:00 PM</p>
-                </div>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-4 bg-primary/5 rounded-[3rem] blur-2xl" />
+              <div className="card relative p-10 bg-white dark:bg-gray-900 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border-gray-100 dark:border-gray-800 rounded-[2.5rem]">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Name</label>
+                      <input type="text" placeholder="Your Name" className="py-4 px-6 font-bold" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Phone</label>
+                      <input type="tel" placeholder="Mobile Number" className="py-4 px-6 font-bold" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} required />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Preferred Service</label>
+                    <select className="py-4 px-6 font-bold text-sm" value={formData.service} onChange={e => setFormData({...formData, service: e.target.value})} required>
+                      <option value="">Choose Service</option>
+                      {services.map(s => <option key={s.name} value={s.name}>{s.name} - ₹{s.price}</option>)}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Date</label>
+                      <input type="date" className="py-4 px-6 font-bold" value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} required />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Time</label>
+                      <input type="time" className="py-4 px-6 font-bold" value={formData.time} onChange={e => setFormData({...formData, time: e.target.value})} required />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full btn btn-primary py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/30 rounded-2xl group">
+                    Request Reservation <ChevronRight className="group-hover:translate-x-2 transition-transform" size={18} />
+                  </button>
+                </form>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="card glass p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold mb-2 ml-1">Your Name</label>
-                  <input required placeholder="Rahul Kumar" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold mb-2 ml-1">Phone Number</label>
-                  <input required placeholder="98765 43210" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2 ml-1">Select Service</label>
-                <select required value={form.service} onChange={e => setForm({...form, service: e.target.value})}>
-                  <option value="">Choose a service...</option>
-                  {services.map(s => <option key={s.name} value={s.name}>{s.name} - ₹{s.price}</option>)}
-                </select>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold mb-2 ml-1">Date</label>
-                  <input type="date" required value={form.date} onChange={e => setForm({...form, date: e.target.value})} />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold mb-2 ml-1">Time</label>
-                  <input type="time" required value={form.time} onChange={e => setForm({...form, time: e.target.value})} />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2 ml-1">Special Note (Optional)</label>
-                <textarea rows="3" placeholder="Anything we should know?" value={form.note} onChange={e => setForm({...form, note: e.target.value})} />
-              </div>
-              <button type="submit" className={`w-full btn btn-primary py-4 text-lg ${isBooked ? 'bg-green-500' : ''}`}>
-                {isBooked ? 'Booking Confirmed! ✅' : 'Confirm Appointment'}
-              </button>
-            </form>
+      {/* Footer */}
+      <footer className="py-20 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20">S</div>
+            <h2 className="text-xl font-black tracking-tighter">SALON<span className="text-primary">PRO</span></h2>
           </div>
+          <div className="flex gap-10 text-[10px] font-black uppercase tracking-widest text-text-muted">
+            <a href="#" className="hover:text-primary transition-colors">Privacy</a>
+            <a href="#" className="hover:text-primary transition-colors">Terms</a>
+            <a href="#" className="hover:text-primary transition-colors">Careers</a>
+            <a href="#" className="hover:text-primary transition-colors">Contact</a>
+          </div>
+          <p className="text-xs font-medium text-text-muted">© 2024 SalonPro Business Elite. All rights reserved.</p>
         </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="text-center">
-        <h2 className="text-3xl font-bold mb-12">What Our Clients Say</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { name: "Sneha R.", text: "Best haircut I've ever had! The staff is so professional.", rating: 5 },
-            { name: "Amit K.", text: "Highly recommend the facial treatments. Very relaxing.", rating: 5 },
-            { name: "Megha S.", text: "The bridal makeup was flawless. Thank you SalonPro!", rating: 5 }
-          ].map((t, i) => (
-            <div key={i} className="card bg-white/50 dark:bg-gray-800/50">
-              <div className="flex justify-center gap-1 mb-4">
-                {[...Array(t.rating)].map((_, i) => <Star key={i} size={16} className="fill-accent text-accent" />)}
-              </div>
-              <p className="italic text-text-muted mb-4">"{t.text}"</p>
-              <p className="font-bold">— {t.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      </footer>
     </div>
   );
 };

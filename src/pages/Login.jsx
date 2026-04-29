@@ -48,45 +48,52 @@ const Login = () => {
       </div>
 
       {/* Right Side: Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 relative">
-        {/* Decorative elements for mobile/tablet */}
-        <div className="lg:hidden absolute inset-0 -z-10 opacity-10">
-          <img 
-            src="/login-bg.png" 
-            alt="bg" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 md:p-24 relative bg-white dark:bg-gray-950">
         <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="max-w-md w-full"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-md w-full -mt-20 lg:-mt-32" 
         >
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                <Shield size={24} />
+          <div className="mb-16">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-white shadow-xl shadow-primary/20">
+                <Shield size={28} strokeWidth={2.5} />
               </div>
-              <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Secure Portal</span>
+              <div className="h-8 w-[2px] bg-gray-200 dark:bg-gray-800" />
+              <span className="text-sm font-black uppercase tracking-[0.4em] text-primary">Master Access</span>
             </div>
-            <h1 className="text-4xl font-black tracking-tighter mb-4 text-gray-900 dark:text-white">Admin Access</h1>
-            <p className="text-text-muted font-medium">Please enter your master password to unlock the Business Elite Dashboard.</p>
+            
+            <h1 className="text-5xl font-black tracking-tighter mb-4 text-gray-900 dark:text-white leading-none">
+              Identity <br />
+              <span className="text-gradient">Verification</span>
+            </h1>
+            <p className="text-lg text-text-muted font-medium">Please enter your master security key to proceed.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-3">
-              <label className="text-[11px] font-black uppercase tracking-[0.2em] text-text-muted ml-1">Master Password</label>
+          <form onSubmit={handleSubmit} className="space-y-10">
+            <div className="space-y-4">
+              <div className="flex justify-between items-end px-2">
+                <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Security Key</label>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="text-[10px] font-black text-primary tracking-widest uppercase">Encrypted Session</span>
+                </div>
+              </div>
               <div className="relative group">
-                <Lock className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${error ? 'text-red-500' : 'text-text-muted group-focus-within:text-primary'}`} size={20} />
-                <input 
-                  type="password" 
-                  placeholder="••••••••" 
-                  className={`pl-12 pr-4 py-5 w-full text-lg font-bold rounded-2xl transition-all duration-300 ${error ? 'border-red-500 bg-red-50/10' : 'bg-gray-100 dark:bg-gray-900 border-2 border-transparent focus:border-primary/20 focus:bg-white dark:focus:bg-gray-800 shadow-sm'}`}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-[2rem] blur opacity-10 group-focus-within:opacity-25 transition duration-500" />
+                <div className="relative">
+                  <Lock className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${error ? 'text-red-500' : 'text-gray-400 group-focus-within:text-primary'}`} size={22} />
+                  <input 
+                    type="password" 
+                    placeholder="Master Password" 
+                    className={`pl-14 pr-6 py-6 w-full text-xl font-bold rounded-[2rem] transition-all duration-300 outline-none ${error ? 'border-red-500 bg-red-50/20 text-red-600' : 'bg-gray-50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary/30 focus:bg-white dark:focus:bg-gray-900 text-gray-900 dark:text-white shadow-inner'}`}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoFocus
+                    required
+                  />
+                </div>
               </div>
             </div>
 
