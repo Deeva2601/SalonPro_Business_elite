@@ -19,77 +19,35 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-stretch bg-white dark:bg-gray-950 overflow-hidden">
-      {/* Left Side: Visual Experience */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gray-950">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black" />
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-        
-        <div className="relative z-10 p-16 self-end w-full">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="w-16 h-1 bg-primary mb-8" />
-            <h2 className="text-5xl font-black text-white mb-4 tracking-tighter leading-tight">
-              Manage Your <br />
-              <span className="text-gradient">Empire</span> With Ease.
-            </h2>
-            <p className="text-xl text-gray-300 font-medium max-w-md">
-              Elite management tools for premium salon businesses. Access your personalized business dashboard.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Right Side: Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 md:p-24 relative bg-white dark:bg-gray-950">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-md w-full -mt-20 lg:-mt-32" 
-        >
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-white shadow-xl shadow-primary/20">
-                <Shield size={28} strokeWidth={2.5} />
-              </div>
-              <div className="h-8 w-[2px] bg-gray-200 dark:bg-gray-800" />
-              <span className="text-sm font-black uppercase tracking-[0.4em] text-primary">Master Access</span>
+    <div className="max-w-7xl mx-auto px-6 py-24 flex items-center justify-center">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-md w-full"
+      >
+        <div className="card p-10 bg-white dark:bg-gray-900 shadow-2xl border-gray-100 dark:border-gray-800 rounded-[2.5rem]">
+          <div className="mb-12 text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center text-primary mx-auto mb-6 shadow-inner">
+              <Shield size={32} />
             </div>
-            
-            <h1 className="text-5xl font-black tracking-tighter mb-4 text-gray-900 dark:text-white leading-none">
-              Identity <br />
-              <span className="text-gradient">Verification</span>
-            </h1>
-            <p className="text-lg text-text-muted font-medium">Please enter your master security key to proceed.</p>
+            <h1 className="text-3xl font-black tracking-tighter mb-2">Owner Access</h1>
+            <p className="text-sm text-text-muted font-medium">Verify your security credentials.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-10">
-            <div className="space-y-4">
-              <div className="flex justify-between items-end px-2">
-                <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Security Key</label>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-[10px] font-black text-primary tracking-widest uppercase">Encrypted Session</span>
-                </div>
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-text-muted ml-2">Security Key</label>
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-[2rem] blur opacity-10 group-focus-within:opacity-25 transition duration-500" />
-                <div className="relative">
-                  <Lock className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${error ? 'text-red-500' : 'text-gray-400 group-focus-within:text-primary'}`} size={22} />
-                  <input 
-                    type="password" 
-                    placeholder="Master Password" 
-                    className={`pl-14 pr-6 py-6 w-full text-xl font-bold rounded-[2rem] transition-all duration-300 outline-none ${error ? 'border-red-500 bg-red-50/20 text-red-600' : 'bg-gray-50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary/30 focus:bg-white dark:focus:bg-gray-900 text-gray-900 dark:text-white shadow-inner'}`}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoFocus
-                    required
-                  />
-                </div>
+                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
+                <input 
+                  type="password" 
+                  placeholder="Master Password" 
+                  className={`pl-14 pr-6 py-4 w-full font-bold rounded-2xl border-2 transition-all ${error ? 'border-red-500 bg-red-50/10' : 'border-gray-50 dark:border-gray-800 focus:border-primary/20'}`}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoFocus
+                  required
+                />
               </div>
             </div>
 
@@ -98,28 +56,23 @@ const Login = () => {
                 <motion.div 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-center gap-3 text-red-500 font-bold text-sm"
+                  className="p-4 bg-red-500/10 text-red-500 rounded-xl text-xs font-bold flex items-center gap-2"
                 >
-                  <AlertCircle size={20} /> Access Denied. Verify your credentials.
+                  <AlertCircle size={16} /> Authentication failed. Please try again.
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <button type="submit" className="w-full btn btn-primary py-5 text-lg font-black tracking-widest uppercase flex items-center justify-center gap-4 group rounded-2xl shadow-2xl shadow-primary/40 active:scale-95 transition-all">
-              Login To Dashboard <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform duration-300" />
+            <button type="submit" className="w-full btn btn-primary py-4 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 rounded-xl shadow-xl shadow-primary/20 group">
+              Login to Admin <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
+        </div>
 
-          <div className="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
-            <p className="text-xs text-text-muted font-bold tracking-widest uppercase">Elite Edition</p>
-            <div className="flex gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[10px] text-green-500 font-black tracking-widest uppercase">System Online</span>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+        <div className="mt-8 text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">SalonPro Business Elite</p>
+        </div>
+      </motion.div>
     </div>
   );
 };

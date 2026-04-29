@@ -9,15 +9,15 @@ import './App.css';
 const AppContent = () => {
   const { isAdminMode, isAuthenticated } = useApp();
 
-  if (isAdminMode && !isAuthenticated) {
-    return <Login />;
-  }
-
   return (
     <div className="app-wrapper">
       <Navbar />
       <main>
-        {isAdminMode ? <AdminDashboard /> : <CustomerApp />}
+        {isAdminMode ? (
+          isAuthenticated ? <AdminDashboard /> : <Login />
+        ) : (
+          <CustomerApp />
+        )}
       </main>
     </div>
   );
