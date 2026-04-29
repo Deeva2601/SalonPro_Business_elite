@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Sun, Moon, User, Shield, Bell, BellOff } from 'lucide-react';
 
 const Navbar = () => {
-  const { theme, toggleTheme, isAdminMode, toggleMode } = useApp();
+  const { theme, toggleTheme, isAdminMode, toggleMode, isAuthenticated, logout } = useApp();
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
 
   return (
@@ -42,18 +42,27 @@ const Navbar = () => {
         {/* Mode Toggle */}
         <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-1 border border-card-border">
           <button 
-            onClick={() => !isAdminMode && toggleMode()}
+            onClick={() => isAdminMode && logout()}
             className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!isAdminMode ? 'bg-white dark:bg-gray-700 shadow-sm text-primary' : 'text-text-muted'}`}
           >
             <User size={16} /> User
           </button>
           <button 
-            onClick={() => isAdminMode && toggleMode()}
+            onClick={() => !isAdminMode && toggleMode()}
             className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${isAdminMode ? 'bg-white dark:bg-gray-700 shadow-sm text-primary' : 'text-text-muted'}`}
           >
             <Shield size={16} /> Admin
           </button>
         </div>
+
+        {isAuthenticated && isAdminMode && (
+          <button 
+            onClick={logout}
+            className="px-4 py-2 bg-red-500 text-white text-xs font-bold rounded-xl hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
+          >
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );

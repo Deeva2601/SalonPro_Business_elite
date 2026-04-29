@@ -5,6 +5,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminPassword, setAdminPassword] = useState(localStorage.getItem('adminPassword') || 'admin123');
   const [bookings, setBookings] = useState([
     { id: 1, name: 'Rahul Sharma', phone: '9876543210', service: 'Hair Cut', date: '2024-05-01', time: '10:30', status: 'Pending', price: 299, note: 'Regular customer' },
     { id: 2, name: 'Priya Singh', phone: '9123456789', service: 'Bridal Makeup', date: '2024-05-02', time: '14:00', status: 'Accepted', price: 7999, note: 'Needs heavy base' },
@@ -18,6 +20,25 @@ export const AppProvider = ({ children }) => {
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
   const toggleMode = () => setIsAdminMode(prev => !prev);
+
+  const login = (password) => {
+    if (password === adminPassword) {
+      setIsAuthenticated(true);
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setIsAdminMode(false);
+  };
+
+  const changePassword = (newPassword) => {
+    setAdminPassword(newPassword);
+    localStorage.setItem('adminPassword', newPassword);
+    return true;
+  };
 
   const addBooking = (newBooking) => {
     const bookingWithId = { 
@@ -44,7 +65,17 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateBookingStatus = (id, status) => {
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, status } : b));
+    setBookings(prev => prev.map(b => {
+      if (b.id === id) {
+        const updated = { ...b, status };
+        if (status === 'Completed') {
+          // Update date to today so it counts in today's revenue
+          updated.date = new Date().toISOString().split('T')[0];
+        }
+        return updated;
+      }
+      return b;
+    }));
   };
 
   const getServicePrice = (serviceName) => {
@@ -63,6 +94,7 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={{ 
       theme, toggleTheme, 
       isAdminMode, toggleMode, 
+      isAuthenticated, login, logout, adminPassword, changePassword,
       bookings, addBooking, addOfflinePayment, updateBookingStatus,
       getServicePrice
     }}>
