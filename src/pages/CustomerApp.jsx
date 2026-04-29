@@ -33,14 +33,10 @@ const CustomerApp = () => {
   return (
     <div className="bg-white dark:bg-gray-950">
       {/* Hero Section - Magazine Style */}
-      <section className="relative h-screen flex items-center overflow-hidden">
+      <section className="relative h-[90vh] flex items-center overflow-hidden bg-gray-950">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/hero-bg.png" 
-            alt="Luxury Salon" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black" />
+          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
@@ -73,22 +69,11 @@ const CustomerApp = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-10 right-10 hidden lg:block">
-          <div className="flex flex-col gap-6 text-white/60">
-            <Globe size={20} className="hover:text-white cursor-pointer transition-colors" />
-            <MessageCircle size={20} className="hover:text-white cursor-pointer transition-colors" />
-          </div>
-        </div>
       </section>
 
       {/* Services Catalog */}
-      <section id="services" className="py-32 px-6 bg-white dark:bg-gray-950 relative overflow-hidden">
-        {/* Aesthetic Background Detail */}
-        <div className="absolute top-1/2 left-0 w-full h-[500px] -translate-y-1/2 opacity-5 pointer-events-none">
-          <img src="/service-bg.png" alt="detail" className="w-full h-full object-cover scale-150 grayscale" />
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
+      <section id="services" className="py-32 px-6 bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12">
             <div className="max-w-xl">
               <p className="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">The Selection</p>

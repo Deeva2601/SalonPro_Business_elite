@@ -21,13 +21,9 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-stretch bg-white dark:bg-gray-950 overflow-hidden">
       {/* Left Side: Visual Experience */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <img 
-          src="/login-bg.png" 
-          alt="Salon Interior" 
-          className="absolute inset-0 w-full h-full object-cover scale-105 animate-pulse-slow"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent" />
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gray-950">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black" />
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         
         <div className="relative z-10 p-16 self-end w-full">
           <motion.div 

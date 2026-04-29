@@ -400,9 +400,12 @@ tr:hover > td {
 
 /* ---- Form field mobile fix ---- */
 @media (max-width: 767px) {
-  .text-6xl {
-    font-size: 2.5rem;
-  }
+  .text-6xl { font-size: 2.5rem; }
+  .text-7xl { font-size: 3rem; }
+  .text-8xl { font-size: 3.5rem; }
+  .py-32 { padding-top: 4rem; padding-bottom: 4rem; }
+  .px-6 { padding-left: 1rem; padding-right: 1rem; }
+  .gap-20 { gap: 2.5rem; }
   .footer-links {
     gap: 2rem;
   }

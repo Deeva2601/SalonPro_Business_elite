@@ -7,7 +7,7 @@ const Navbar = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
 
   return (
-    <nav className="glass sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-opacity-10 backdrop-blur-md">
+    <nav className="glass sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
           S
