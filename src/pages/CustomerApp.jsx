@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { 
   Scissors, Sparkles, Heart, Clock, Star, 
-  MapPin, Phone, Instagram, Facebook, 
+  MapPin, Phone, Globe, MessageCircle, 
   ArrowRight, Check, Calendar, User, PhoneCall,
   ChevronRight
 } from 'lucide-react';
@@ -75,8 +75,8 @@ const CustomerApp = () => {
 
         <div className="absolute bottom-10 right-10 hidden lg:block">
           <div className="flex flex-col gap-6 text-white/60">
-            <Instagram size={20} className="hover:text-white cursor-pointer transition-colors" />
-            <Facebook size={20} className="hover:text-white cursor-pointer transition-colors" />
+            <Globe size={20} className="hover:text-white cursor-pointer transition-colors" />
+            <MessageCircle size={20} className="hover:text-white cursor-pointer transition-colors" />
           </div>
         </div>
       </section>

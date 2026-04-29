@@ -18,6 +18,7 @@ const AppContent = () => {
       <Navbar />
       <main>
         {isAdminMode ? <AdminDashboard /> : <CustomerApp />}
+      </main>
     </div>
   );
 };

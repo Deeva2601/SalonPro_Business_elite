@@ -13,6 +13,15 @@ export const AppProvider = ({ children }) => {
     { id: 3, name: 'Anjali Gupta', phone: '8877665544', service: 'Facial', date: '2024-04-28', time: '11:00', status: 'Completed', price: 999, note: '' },
   ]);
 
+  const [services] = useState([
+    { name: 'Hair Cut', price: 299, duration: '45 mins' },
+    { name: 'Hair Spa', price: 799, duration: '60 mins' },
+    { name: 'Bridal Makeup', price: 7999, duration: '180 mins' },
+    { name: 'Party Makeup', price: 1999, duration: '90 mins' },
+    { name: 'Facial', price: 999, duration: '60 mins' },
+    { name: 'Manicure/Pedicure', price: 699, duration: '75 mins' },
+  ]);
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
@@ -94,7 +103,7 @@ export const AppProvider = ({ children }) => {
       theme, toggleTheme, 
       isAdminMode, toggleMode, 
       isAuthenticated, login, logout, adminPassword, changePassword,
-      bookings, addBooking, addOfflinePayment, updateBookingStatus,
+      bookings, services, addBooking, addOfflinePayment, updateBookingStatus,
       getServicePrice
     }}>
       {children}
